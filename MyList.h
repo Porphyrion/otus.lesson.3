@@ -1,6 +1,8 @@
 #ifndef LIST_MYLIST_H
 #define LIST_MYLIST_H
 
+#include <iterator>
+
 template <typename T, class Allocator = std::allocator<T> >
 class MyList{
 
@@ -11,9 +13,12 @@ class MyList{
 
 public:
 
-    class Iterator{
+    class Iterator : std::iterator<std::forward_iterator_tag, Node>{
 
-        Iterator(Node * node): m_node(node){};
+    public:
+
+        Iterator(Node * node): m_node(node){
+        };
 
         bool operator==( const Iterator& other ) const {
             if( this == &other ) {
@@ -27,6 +32,7 @@ public:
         }
 
         T operator*() const {
+
             if( m_node ) {
                 return m_node->m_t;
             }
@@ -40,7 +46,8 @@ public:
             } // Иначе достигнут конец списка. Уместно возбудить исключение
         }
 
-        private:
+    private:
+
             Node * m_node;
     };
 
@@ -76,7 +83,7 @@ public:
 
     Node * createNewNode(T t){
         Node * pNode = B.allocate(1);
-        new(pNode) Node;
+        new(pNode) Node(t);
         return pNode;
     }
 
