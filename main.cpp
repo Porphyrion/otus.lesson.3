@@ -32,12 +32,12 @@ int main(){
         simpleList.append(i);
 
     //создание кастомного списка с кастомным аллокатором
-    //auto customAllocatorList = MyList<int, reserve_allocator<int, 10>>{};
-    //for(auto i = 0; i < 10; ++i)
-    //    customAllocatorList.append(i);
+    auto customAllocatorList = MyList<int, reserve_allocator<int, 10>>{};
+    for(auto i = 0; i < 10; ++i)
+        customAllocatorList.append(i);
     //вывод значений
-    //for(auto i : customAllocatorList)
-	//   std::cout<<i<<" ";
+    for(auto i : customAllocatorList)
+	   std::cout<<i<<" ";
 
     std::cout<<std::endl;
 
