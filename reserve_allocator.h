@@ -24,8 +24,7 @@ public:
         using other = reserve_allocator<U, N>;
     };
 
-    reserve_allocator(){
-    };
+    reserve_allocator(){};
 
     T * allocate(std::size_t n){
         return mem.allocate(n);

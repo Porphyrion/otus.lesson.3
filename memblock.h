@@ -11,36 +11,39 @@
 template<class T>
 class MemBlock{
 public:
+
     MemBlock(size_t N): size(N),next(0){
         auto p_ = std::malloc(size * sizeof(T));
+        std::cout<<"alloc!"<<std::endl;
         if(!p_){
             throw std::bad_alloc();
         }
         p = reinterpret_cast<T *> (p_);
-	
     };
 
     T * allocate(std::size_t n){
       	if(next < size) return p + next++;
-	else return nullptr;
+	    else return nullptr;
     };
 
     void deallocate(T * p, std::size_t n_){
-	--next;
-	if(!next) std::free(p);
+        --next;
+        std::cout<<"WHY"<<p<<std::endl;
+        if(!next) {
+            std::cout<<"WHYYYYY "<<p<<std::endl;
+            std::free(p);
+        }
     };
 
     bool isFull(){
-      return next == size;
-    }
-    
-    
-    
+        return next == size;
+    };
+
 private:
+
     size_t size;// размер блока
     T * p; //указатель на выделеную область памяти
-    int next; 
-    
+    int next;
 };
 
 
@@ -50,11 +53,11 @@ public:
     MemManager(size_t n) : blockSize(n){
 	MemBlock<T> temp(blockSize);
         blocks.push_back(temp);
-        allocBlock = &blocks.back();	
+        allocBlock = &blocks.back();
     };
-    
-    T * allocate(size_t n){     	
-	T* res = allocBlock->allocate(n);
+
+    T * allocate(size_t n){
+        T* res = allocBlock->allocate(n);
         if(res != nullptr) return res;
         else {
             for(auto i : blocks){
@@ -70,9 +73,8 @@ public:
     };
 
     void deallocate(T * p, std::size_t n){
-	allocBlock->deallocate(p, n);
+	    allocBlock->deallocate(p, n);
     }
-
 
 private:
     std::vector<MemBlock<T>> blocks;

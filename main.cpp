@@ -3,15 +3,14 @@
 #include "reserve_allocator.h"
 #include "MyList.h"
 
-int fact (int n)
-{
-    int r = 1;
-    for (int i=2; i<=n; i++)
-        r *= i;
-    return r;
+long fact(int x){
+    if (!x)
+        return 1;
+    else
+        return x * fact(x - 1);
 }
 
-int main( ){
+int main(){
 
     //создание  простого map и заполнение значениями
     auto simpleMap = std::map<int, long>{};
@@ -21,10 +20,10 @@ int main( ){
     //создание map с кастомным аллокатором
 	auto customAllocatorMap = std::map<int, long, std::less<int>, reserve_allocator<std::pair<int, long>, 10>>{};
  	for (auto i = 0; i < 10; i++)
-	  customAllocatorMap.emplace(i, fact(i));
+        customAllocatorMap.emplace(i, fact(i));
     //вывод значений
-    for(auto i : customAllocatorMap)
-        std::cout<<i.first<<" "<<i.second<<std::endl;
+    //for(auto i : customAllocatorMap)
+    //    std::cout<<i.first<<" "<<i.second<<std::endl;
 
 
     //создание кастомного списка
@@ -33,15 +32,14 @@ int main( ){
         simpleList.append(i);
 
     //создание кастомного списка с кастомным аллокатором
-    auto customAllocatorList = MyList<int, reserve_allocator<int, 10>>{};
-    for(auto i = 0; i < 10; ++i)
-        customAllocatorList.append(i);
+    //auto customAllocatorList = MyList<int, reserve_allocator<int, 10>>{};
+    //for(auto i = 0; i < 10; ++i)
+    //    customAllocatorList.append(i);
     //вывод значений
-    for(auto i : customAllocatorList)
-	std::cout<<i<<" ";
-    
-    std::cout<<std::endl;
+    //for(auto i : customAllocatorList)
+	//   std::cout<<i<<" ";
 
+    std::cout<<std::endl;
 
 	return 0;
 };
