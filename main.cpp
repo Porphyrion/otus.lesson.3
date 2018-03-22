@@ -22,8 +22,8 @@ int main(){
  	for (auto i = 0; i < 10; i++)
         customAllocatorMap.emplace(i, fact(i));
     //вывод значений
-    //for(auto i : customAllocatorMap)
-    //    std::cout<<i.first<<" "<<i.second<<std::endl;
+    for(auto i : customAllocatorMap)
+        std::cout<<i.first<<" "<<i.second<<std::endl;
 
 
     //создание кастомного списка

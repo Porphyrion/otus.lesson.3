@@ -1,11 +1,7 @@
 #pragma once
 
-#include <map>
 #include <memory>
 #include <vector>
-#include <iostream>
-#include <deque>
-#include <algorithm>
 
 
 template<class T>
@@ -14,7 +10,6 @@ public:
 
     MemBlock(size_t N): size(N),next(0){
         auto p_ = std::malloc(size * sizeof(T));
-        std::cout<<"alloc!"<<std::endl;
         if(!p_){
             throw std::bad_alloc();
         }
@@ -28,9 +23,7 @@ public:
 
     void deallocate(T * p, std::size_t n_){
         --next;
-        std::cout<<"WHY"<<p<<std::endl;
         if(!next) {
-            std::cout<<"WHYYYYY "<<p<<std::endl;
             std::free(p);
         }
     };
